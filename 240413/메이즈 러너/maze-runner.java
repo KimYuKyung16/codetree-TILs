@@ -123,14 +123,14 @@ public class Main {
 		boolean flag = false;
 
 		while (!flag) {
+			if (dist >= n)
+				break;
 			for (int i = 0; i < n; i++) {
 				if (flag)
 					break;
 				for (int j = 0; j < n; j++) {
 					if (flag)
 						break;
-					if (i + dist >= n || j + dist >= n)
-						continue;
 
 					int last_r = i + dist;
 					int last_c = j + dist;
@@ -160,7 +160,7 @@ public class Main {
 		}
 	}
 
-	// 벽 회전 (시계 방향) 후 기존 맵에 회전 적용 --> 회전 공식 외우기
+	// 벽 회전 (시계 방향) 후 기존 맵에 회전 적용
 	public static void rotate(int r, int c, int dist) {
 		for (int i = 0; i < dist; i++) {
 			for (int j = 0; j < dist; j++) {
@@ -197,6 +197,14 @@ public class Main {
 			}
 		}
 	}
+
+	public static void print(int[][] test) {
+		for (int i = 0; i < n; i++) {
+			System.out.println(Arrays.toString(test[i]));
+		}
+		System.out.println();
+	}
+
 	static class Position {
 		int r;
 		int c;
