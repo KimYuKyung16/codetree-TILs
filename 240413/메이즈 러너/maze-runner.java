@@ -39,7 +39,7 @@ public class Main {
 			st = new StringTokenizer(br.readLine());
 			int r = Integer.parseInt(st.nextToken()) - 1;
 			int c = Integer.parseInt(st.nextToken()) - 1;
-			map[r][c] = 10;
+			map[r][c] += 10;
 			people.add(new Position(r, c));
 		}
 
