@@ -129,6 +129,8 @@ public class Main {
 				for (int j = 0; j < n; j++) {
 					if (flag)
 						break;
+					if (i + dist >= n || j + dist >= n)
+						continue;
 
 					int last_r = i + dist;
 					int last_c = j + dist;
