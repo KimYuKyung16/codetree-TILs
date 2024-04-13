@@ -99,7 +99,7 @@ public class Main {
 
 			// 사람 이동 완료
 			if (map[cr][cc] == 0 || (map[cr][cc] >= 10 && map[cr][cc] <= 100)) { // 이동할 수 있는 구간인 경우
-				map[people.get(i).r][people.get(i).c] = 0;
+				map[people.get(i).r][people.get(i).c] -= 10;
 				map[cr][cc] += 10;
 
 				people.get(i).r = cr;
