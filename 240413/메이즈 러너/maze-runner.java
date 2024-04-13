@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -39,7 +38,7 @@ public class Main {
 			st = new StringTokenizer(br.readLine());
 			int r = Integer.parseInt(st.nextToken()) - 1;
 			int c = Integer.parseInt(st.nextToken()) - 1;
-			map[r][c] += 10;
+			map[r][c] = 10;
 			people.add(new Position(r, c));
 		}
 
@@ -99,7 +98,7 @@ public class Main {
 
 			// 사람 이동 완료
 			if (map[cr][cc] == 0 || (map[cr][cc] >= 10 && map[cr][cc] <= 100)) { // 이동할 수 있는 구간인 경우
-				map[people.get(i).r][people.get(i).c] -= 10;
+				map[people.get(i).r][people.get(i).c] = 0;
 				map[cr][cc] += 10;
 
 				people.get(i).r = cr;
@@ -129,7 +128,7 @@ public class Main {
 				for (int j = 0; j < n; j++) {
 					if (flag)
 						break;
-					if (i + dist >= n || j + dist >= n)
+					if (i + dist > n || j + dist > n)
 						continue;
 
 					int last_r = i + dist;
@@ -160,7 +159,7 @@ public class Main {
 		}
 	}
 
-	// 벽 회전 (시계 방향) 후 기존 맵에 회전 적용
+	// 벽 회전 (시계 방향) 후 기존 맵에 회전 적용 --> 회전 공식 외우기
 	public static void rotate(int r, int c, int dist) {
 		for (int i = 0; i < dist; i++) {
 			for (int j = 0; j < dist; j++) {
@@ -196,13 +195,6 @@ public class Main {
 				}
 			}
 		}
-	}
-
-	public static void print(int[][] test) {
-		for (int i = 0; i < n; i++) {
-			System.out.println(Arrays.toString(test[i]));
-		}
-		System.out.println();
 	}
 
 	static class Position {
