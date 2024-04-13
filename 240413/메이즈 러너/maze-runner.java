@@ -123,8 +123,6 @@ public class Main {
 		boolean flag = false;
 
 		while (!flag) {
-			if (dist >= n)
-				break;
 			for (int i = 0; i < n; i++) {
 				if (flag)
 					break;
