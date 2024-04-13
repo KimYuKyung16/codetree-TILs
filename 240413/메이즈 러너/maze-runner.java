@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -111,6 +112,8 @@ public class Main {
 				escape_cnt++;
 			}
 		}
+
+		update_people_position();
 	}
 
 	// 제일 작은 정사각형 찾기 (완탐)
@@ -124,32 +127,35 @@ public class Main {
 				if (flag)
 					break;
 				for (int j = 0; j < n; j++) {
-					boolean people_state = false;
-					boolean exit_state = false;
-
+					if (flag)
+						break;
 					if (i + dist >= n || j + dist >= n)
 						continue;
 
-					for (int r = i; r < i + dist; r++) {
-						for (int c = j; c < j + dist; c++) {
-							if (map[r][c] >= 10 && map[r][c] <= 100) { // 사람일 경우
-								people_state = true;
-							}
-							if (map[r][c] == 200) { // 출구일 경우
-								exit_state = true;
-							}
-						}
+					int last_r = i + dist;
+					int last_c = j + dist;
+
+					// 출구가 해당 구역 안에 있는지 확인
+					if (exit.r >= i && exit.r < last_r && exit.c >= j && exit.c < last_c) {
+					} else {
+						continue;
 					}
 
-					// 사람과 출구가 모두 있는 경우
-					if (people_state && exit_state) {
-						rotate(i, j, dist);
-						flag = true;
-						break;
+					// 사람들이 해당 구역 안에 있는지 확인
+					for (int k = 0; k < people.size(); k++) {
+						int pr = people.get(k).r;
+						int pc = people.get(k).c;
+
+						if (pr >= i && pr < last_r && pc >= j && pc < last_c) {
+							rotate(i, j, dist);
+							flag = true;
+							break;
+						} else {
+							continue;
+						}
 					}
 				}
 			}
-
 			dist++;
 		}
 	}
@@ -191,7 +197,6 @@ public class Main {
 			}
 		}
 	}
-
 	static class Position {
 		int r;
 		int c;
