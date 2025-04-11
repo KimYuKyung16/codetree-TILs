@@ -184,13 +184,13 @@ public class Main {
 
         if (ny < 0 || ny >= N || nx < 0 || nx >= M) { // 가장자리
           if (ny < 0) {
-            ny = N;
+            ny = N-1;
           } else if (ny >= N) {
             ny = 0;
           }
 
           if (nx < 0) {
-            nx = M;
+            nx = M-1;
           } else if (nx >= M) {
             nx = 0;
           }
