@@ -66,7 +66,7 @@ public class Main {
             if (power < selected.power) {
               selected = new Turret(i, j, power, attackTime);
             } else if (power == selected.power) { // 공격력이 같을 경우
-              if (attackTime < selected.attackTime) { // 공격한지 더 오래됐을 경우
+              if (attackTime < selected.attackTime) { 
                 selected = new Turret(i, j, power, attackTime);
               } else if (attackTime == selected.attackTime) {
                 if (i + j > selected.y + selected.x) { // 행과 열의 합이 더 큰 경우
@@ -137,7 +137,7 @@ public class Main {
             
             init = prev;
           }
-  
+
           return true;
         }
         
@@ -174,6 +174,7 @@ public class Main {
 
     // 포탄 공격
     public static void attack_shell(Turret attacker, Turret strongTurret) {
+      board[strongTurret.y][strongTurret.x].attack = true;
       // 공격 대상 포탑
       board[strongTurret.y][strongTurret.x].power = board[strongTurret.y][strongTurret.x].power - attacker.power < 0 ? 0 : board[strongTurret.y][strongTurret.x].power - attacker.power;
       
@@ -182,6 +183,7 @@ public class Main {
         int ny = strongTurret.y + shell_dy[d];
         int nx = strongTurret.x + shell_dx[d];
 
+        if (ny == attacker.y && nx == attacker.x) continue;
         if (ny < 0 || ny >= N || nx < 0 || nx >= M) { // 가장자리
           if (ny < 0) {
             ny = N-1;
@@ -196,6 +198,7 @@ public class Main {
           }
         }
 
+        board[strongTurret.y][strongTurret.x].attack = true;
         int newPower = board[ny][nx].power - (int) (attacker.power / 2);
         board[ny][nx].power = newPower < 0 ? 0 : newPower;
         board[ny][nx].attack = true;
@@ -256,6 +259,15 @@ public class Main {
       }
     }
 
+    public static void print() {
+      for (int i=0; i<N; i++) {
+        System.out.println();
+        for (int j=0; j<M; j++) {
+          System.out.print(board[i][j].power + " " + board[i][j].attackTime + "|");
+        }
+      }
+    }
+
     public static void init() throws Exception {
         st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
@@ -265,7 +277,7 @@ public class Main {
 
         for (int i=0; i<N; i++) {
           st = new StringTokenizer(br.readLine());
-          for (int j=0; j<N; j++) {
+          for (int j=0; j<M; j++) {
             board[i][j] = new Point(Integer.parseInt(st.nextToken()), 0, false);
           }
         }
@@ -291,9 +303,11 @@ public class Main {
       while(!(count == K)) {
         count++;
         Turret attacker = set_attacker(); // 공격자
+
         // 공격자는 시간 0, 공격자 제외 시간 +1
         for (int i=0; i<N; i++) {
           for (int j=0; j<M; j++) {
+            board[i][j].attack = false;
             if (i == attacker.y && j == attacker.x) {
               board[i][j].attackTime = 0;
               continue;
@@ -315,7 +329,6 @@ public class Main {
         if (turret_count == 1) {
           break;
         }
-
       }
       answer();
     }
