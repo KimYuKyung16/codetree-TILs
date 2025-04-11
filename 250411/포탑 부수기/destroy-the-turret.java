@@ -90,7 +90,7 @@ public class Main {
 
     // 2. 공격자의 공격
     public static void attack(Turret attacker) {
-      Turret strongTurret = pick_strong_turret(); // 가장 강한 포탑
+      Turret strongTurret = pick_strong_turret(attacker); // 가장 강한 포탑
 
       boolean isAvailableLaserAttack = attack_laser(attacker, strongTurret); // 레이저 공격 가능 여부
 
@@ -137,7 +137,7 @@ public class Main {
             
             init = prev;
           }
-
+  
           return true;
         }
         
@@ -198,18 +198,19 @@ public class Main {
 
         int newPower = board[ny][nx].power - (int) (attacker.power / 2);
         board[ny][nx].power = newPower < 0 ? 0 : newPower;
-        board[ny][ny].attack = true;
+        board[ny][nx].attack = true;
       }
     }
 
     // 가장 강한 포탑 선정
-    public static Turret pick_strong_turret() {
+    public static Turret pick_strong_turret(Turret attacker) {
       Turret selected = null;
 
       for (int i=0; i<N; i++) {
         for (int j=0; j<M; j++) {
           int power = board[i][j].power;
           int attackTime = board[i][j].attackTime;
+          if (i == attacker.y && j == attacker.x) continue; // 
           if (power == 0) continue; // 이미 죽은 포탑
           if (selected == null) {
             selected = new Turret(i, j, power, attackTime);
@@ -303,8 +304,8 @@ public class Main {
         attack(attacker);
 
       }
-      
       answer();
+
 
     }
   }
