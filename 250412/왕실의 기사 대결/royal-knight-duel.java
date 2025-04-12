@@ -75,8 +75,8 @@ public class Main {
 
       for (int i=0; i<N; i++) {
         if (ismoved[i]) continue;
-        if (knights.get(i).r + knights.get(i).h < nr || knights.get(i).r > nr + knight.h) continue;
-        if (knights.get(i).c + knights.get(i).w < nc || knights.get(i).c > nc + knight.c) continue;
+        if (knights.get(i).r + knights.get(i).h < nr || knights.get(i).r > nr + knight.h - 1) continue;
+        if (knights.get(i).c + knights.get(i).w < nc || knights.get(i).c > nc + knight.w - 1) continue;
       
         ismoved[i] = true;
         queue.add(i);
