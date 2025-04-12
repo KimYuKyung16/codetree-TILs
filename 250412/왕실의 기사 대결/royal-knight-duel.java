@@ -12,6 +12,7 @@ public class Main {
   static int[] dc = new int[] {0,1,0,-1};
   static ArrayList<Knight> knights = new ArrayList<>();
   static int[] damages;
+  static boolean[] ismoved;
 
   static class Knight  {
     int r;
@@ -33,16 +34,20 @@ public class Main {
 
   // 명령 수행하기
   public static void go_command(int knightIndex, int direction) {
+    if (!knights.get(knightIndex).alive) return;
+
     if (isAvilableCommand(knightIndex, direction)) { // 명령 수행 가능
       // 실제로 수행하기
       for (int i=0; i<N; i++) {
-        Knight knight = knights.get(i);
-        knight.r = knight.r + dr[direction];
-        knight.c = knight.c + dc[direction];
-        knight.damage = knight.damage + damages[i];
-
-        if (knight.damage >= knight.k) {
-          knight.alive = false;
+        if (ismoved[i]) {
+          Knight knight = knights.get(i);
+          knight.r = knight.r + dr[direction];
+          knight.c = knight.c + dc[direction];
+          knight.damage = knight.damage + damages[i];
+  
+          if (knight.damage >= knight.k) {
+            knight.alive = false;
+          }
         }
       }
     } else { // 명령 수행 불가능
@@ -53,9 +58,10 @@ public class Main {
   // 명령 수행 가능한가?
   public static boolean isAvilableCommand(int knightIndex, int direction) {
     Queue<Integer> queue = new LinkedList<>();
-    queue.add(knightIndex);
     damages = new int[N];
-    boolean[] ismoved = new boolean[N];
+    ismoved = new boolean[N];
+    
+    queue.add(knightIndex);
     ismoved[knightIndex] = true;
 
     while(!queue.isEmpty()) {
@@ -74,9 +80,9 @@ public class Main {
       }
 
       for (int i=0; i<N; i++) {
-        if (ismoved[i]) continue;
-        if (knights.get(i).r + knights.get(i).h < nr || knights.get(i).r > nr + knight.h - 1) continue;
-        if (knights.get(i).c + knights.get(i).w < nc || knights.get(i).c > nc + knight.w - 1) continue;
+        if (ismoved[i] || !knights.get(i).alive) continue;
+        if (knights.get(i).r + knights.get(i).h - 1 < nr || knights.get(i).r > (nr + knight.h - 1)) continue;
+        if (knights.get(i).c + knights.get(i).w - 1 < nc || knights.get(i).c > (nc + knight.w - 1)) continue;
       
         ismoved[i] = true;
         queue.add(i);
