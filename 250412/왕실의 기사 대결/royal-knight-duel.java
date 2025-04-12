@@ -64,7 +64,7 @@ public class Main {
       int nr = knight.r + dr[direction];
       int nc = knight.c + dc[direction];
 
-      if (nr < 0 || nr >= L || nc < 0 || nc >= L) return false;
+      if (nr < 0 || nr + knight.h - 1 >= L || nc < 0 || nc + knight.w - 1 >= L) return false;
 
       for (int i=nr; i<nr+knight.h; i++) {
         for (int j=nc; j<nc+knight.w; j++) {
